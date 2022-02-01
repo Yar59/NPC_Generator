@@ -7,15 +7,15 @@ NUMBER_OF_CARDS = 10
 fake = Faker("ru_RU")
 
 SKILLS = ["Стремительный прыжок",
-"Электрический выстрел",
-"Ледяной удар",
-"Стремительный удар",
-"Кислотный взгляд",
-"Тайный побег",
-"Ледяной выстрел",
-"Огненный заряд"]
+          "Электрический выстрел",
+          "Ледяной удар",
+          "Стремительный удар",
+          "Кислотный взгляд",
+          "Тайный побег",
+          "Ледяной выстрел",
+          "Огненный заряд"]
 
-LETTERS_MAPPING ={
+LETTERS_MAPPING = {
     'а': 'а͠', 'б': 'б̋', 'в': 'в͒͠',
     'г': 'г͒͠', 'д': 'д̋', 'е': 'е͠',
     'ё': 'ё͒͠', 'ж': 'ж͒', 'з': 'з̋̋͠',
@@ -41,8 +41,9 @@ LETTERS_MAPPING ={
     ' ': ' '
 }
 
+
 def main(number_of_cards):
-    for j in range(number_of_cards):  
+    for j in range(number_of_cards):
         random_first_name = fake.first_name()
         random_last_name = fake.last_name()
         random_job = fake.job()
@@ -51,28 +52,30 @@ def main(number_of_cards):
         rune_skills = []
         for i in range(len(random_skills)):
             rune_skills.append(random_skills[i])
-            for original,rune in LETTERS_MAPPING.items():
-               rune_skills[i] = rune_skills[i].replace(original, rune)
-            
+            for original, rune in LETTERS_MAPPING.items():
+                rune_skills[i] = rune_skills[i].replace(original, rune)
         context = {
-        "first_name": random_first_name,
-        "last_name": random_last_name,
-        "town": random_city,
-        "job": random_job,
-        "strength": random.randint(3,18),
-        "agility": random.randint(3,18),
-        "endurance": random.randint(3,18),
-        "intelligence": random.randint(3,18),
-        "luck": random.randint(3,18),
-        "skill_1": rune_skills[0],
-        "skill_2": rune_skills[1],
-        "skill_3": rune_skills[2]
+                    "first_name": random_first_name,
+                    "last_name": random_last_name,
+                    "town": random_city,
+                    "job": random_job,
+                    "strength": random.randint(3, 18),
+                    "agility": random.randint(3, 18),
+                    "endurance": random.randint(3, 18),
+                    "intelligence": random.randint(3, 18),
+                    "luck": random.randint(3, 18),
+                    "skill_1": rune_skills[0],
+                    "skill_2": rune_skills[1],
+                    "skill_3": rune_skills[2]
         }
 
-        render_template("src/charsheet.svg", "output/svg/{j}.{random_first_name}{random_last_name}.svg".format(j=j,random_first_name=random_first_name, random_last_name=random_last_name), context)
+        input_pass = "src/charsheet.svg"
+        output_pass = """output/svg/{j}.{f_name}{l_name}.svg\
+                        """.format(j=j,
+                                   f_name=random_first_name,
+                                   l_name=random_last_name)
+        render_template(input_pass, output_pass, context)
 
 
 if __name__ == '__main__':
     main(NUMBER_OF_CARDS)
-
-
